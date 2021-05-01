@@ -146,6 +146,10 @@ img {
   }
 }
 
+main .main-container {
+  padding: 0;
+}
+
 // form ============
 .form {
   margin-top: 3rem;
@@ -190,6 +194,12 @@ img {
     }
   }
 
+  & .read {
+    // background-color: rgba($grey, 0.3);
+    // opacity: 0.5;
+    // text-decoration: line-through;
+  }
+
   &__heading {
     // border: 1px solid;
     display: flex;
@@ -204,6 +214,11 @@ img {
     color: $cta;
   }
 
+  & .read &__title {
+    opacity: 0.8;
+    text-decoration: line-through;
+  }
+
   &__btn {
     font-size: 1.4rem;
     text-transform: uppercase;
@@ -214,11 +229,11 @@ img {
     color: $cta;
     border-radius: 3px;
   }
-
-  &__btn.read {
+  & .read &__btn {
     background-color: $secondary;
     border-color: $black;
     color: $black;
+    // text-decoration: none;
   }
 
   &__description {
@@ -231,6 +246,11 @@ img {
     margin-right: 1.2rem;
     font-size: 1.6rem;
     color: $grey;
+  }
+
+  & .read &__text {
+    opacity: 0.8;
+    text-decoration: line-through;
   }
 }
 
@@ -251,12 +271,16 @@ img {
   }
 
   &__item {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    padding-bottom: 2rem;
     &:not(:last-of-type) {
       margin-bottom: 3rem;
     }
   }
 
   &__heading {
+    padding: 1.5rem 1.5rem 0;
+
     display: grid;
     // moving the grid items to the bottom vertically
     align-items: flex-end;
@@ -316,23 +340,38 @@ img {
   }
 
   &__text {
+    padding: 0 1.5rem;
   }
 
   &__links {
     margin-top: 2rem;
-    background-color: $secondary;
+    // background-color: $grey;
+    // background-color: rgba($black, 0.7);
     display: flex;
     flex-wrap: wrap;
     padding: 2rem 1rem;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+
+  &__links__heading {
+    font-size: 1.8rem;
+    color: $cta;
+    text-transform: uppercase;
+    flex: 100%;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid;
+    padding: 0 0 1.5rem 1rem;
   }
 
   &__link {
-    color: $white;
+    color: $cta;
     text-transform: capitalize;
-    background-color: lighten($cta, 5%);
-    margin: 0.5rem 0;
+    // background-color: lighten($cta, 5%);
+    background-color: $secondary;
+    margin: 0.5rem 0 0.5rem 1rem;
     padding: 0.7rem 1.1rem;
     display: inline-block;
     font-weight: 700;
