@@ -130,8 +130,8 @@ img {
   color: $white;
   font-weight: 700;
   display: inline-block;
-  font-size: 1.6rem;
-  padding: 1rem 1.6rem;
+  font-size: 1.3rem;
+  padding: 0.8rem 1.2rem;
   border-radius: 3px;
 
   &-cta {
@@ -189,7 +189,7 @@ img {
   }
 
   &__title {
-    font-size: 3rem;
+    font-size: 2.7rem;
     text-transform: capitalize;
   }
 
@@ -219,7 +219,7 @@ main .main-container {
   }
 
   &__input {
-    padding: 1rem;
+    padding: 1.4rem 1rem;
     font-size: 1.4rem;
     width: 80%;
     border-top-left-radius: 3px;
@@ -273,11 +273,16 @@ main .main-container {
     text-decoration: line-through;
   }
 
-  &__btn {
-    font-size: 1.4rem;
+  &__btns {
+    display: flex;
+  }
+
+  &__btn,
+  &__delete {
+    font-size: 1.2rem;
     text-transform: uppercase;
     border: 2px solid $cta;
-    padding: 1rem 1.5rem;
+    padding: 0.8rem 1.1rem;
     color: $black;
     font-weight: 700;
     color: $cta;
@@ -290,8 +295,20 @@ main .main-container {
     // text-decoration: none;
   }
 
+  &__delete {
+    margin-left: 0.5rem;
+    background-color: $black;
+    border-color: $black;
+    color: $white;
+
+    &:hover,
+    &:active {
+      opacity: 0.8;
+    }
+  }
+
   &__description {
-    margin-top: 0.5rem;
+    margin-top: 2rem;
     display: flex;
   }
 

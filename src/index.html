@@ -28,14 +28,20 @@
             </div>
             <form class="form">
               <input type="text" class="form__input" />
-              <input type="button" value="add book" class="btn btn-cta" />
+              <!-- <input type="button" value="add book" class="btn btn-cta" /> -->
+              <button class="btn btn-cta">add book</button>
             </form>
             
             <ul class="my-books__list">
               <li class="my-books__item">
                 <div class="my-books__heading">
                   <h3 class="my-books__title">dope book tile</h3>
-                  <a href="#" class="my-books__btn">unread</a>
+                  <div class="my-books__btns">
+                    <a href="#" class="my-books__btn">unread</a>
+                    <a href="#" class="my-books__delete">delete</a>
+                  </div>
+                  
+
                 </div>
                 <div class="my-books__description">
                   <p class="my-books__text">first lastname</p>
@@ -48,6 +54,7 @@
                 <div class="my-books__heading">
                   <h3 class="my-books__title">another dope book tile</h3>
                   <a href="#" class="my-books__btn">read</a>
+                  <a href="#" class="my-books__delete">delete</a>
                 </div>
                 <div class="my-books__description">
                   <p class="my-books__text">first lastname</p>
