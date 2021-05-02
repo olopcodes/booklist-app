@@ -1,5 +1,6 @@
+// fonts
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;400;700&family=Roboto:wght@100;400;700&display=swap");
-
+// colors
 $cta: #904c77;
 $white: #f7f7f2;
 $grey: #74776b;
@@ -7,6 +8,30 @@ $black: #1c1d21;
 $secondary: #ffdb05;
 $heading: "Inter", sans-serif;
 $regular: "Roboto", sans-serif;
+// media query mixin
+@mixin for-size($size) {
+  @if $size == phone {
+    @media (max-width: 37em) {
+      @content;
+    }
+  } @else if $size == tablet-portrait {
+    @media (min-width: 37.5em) {
+      @content;
+    }
+  } @else if $size == tablet-landscape {
+    @media (min-width: 56.25em) {
+      @content;
+    }
+  } @else if $size == desktop {
+    @media (min-width: 75em) {
+      @content;
+    }
+  } @else if $size == big-desktop {
+    @media (min-width: 112.5em) {
+      @content;
+    }
+  }
+}
 
 // base ==========
 html {
