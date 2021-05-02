@@ -9,24 +9,29 @@ $secondary: #ffdb05;
 $heading: "Inter", sans-serif;
 $regular: "Roboto", sans-serif;
 // media query mixin
-@mixin for-size($size) {
+@mixin media($size) {
+  // <= 600
   @if $size == phone {
     @media (max-width: 37em) {
       @content;
     }
   } @else if $size == tablet-portrait {
+    // 600 >
     @media (min-width: 37.5em) {
       @content;
     }
   } @else if $size == tablet-landscape {
+    // 900 >=
     @media (min-width: 56.25em) {
       @content;
     }
   } @else if $size == desktop {
+    // 1200 >=
     @media (min-width: 75em) {
       @content;
     }
   } @else if $size == big-desktop {
+    // 1800 >=
     @media (min-width: 112.5em) {
       @content;
     }
@@ -38,6 +43,13 @@ html {
   font-size: 62.5%;
   height: 100%;
   box-sizing: border-box;
+  @include media("desktop") {
+    font-size: 70%;
+  }
+
+  @include media("big-desktop") {
+    font-size: 73%;
+  }
 }
 
 *,
@@ -82,6 +94,12 @@ img {
   padding: 0 1.5rem;
   width: 100%;
   max-width: 1100px;
+  @include media("tablet-portrait") {
+    padding: 0 2.5rem;
+  }
+  @include media("desktop") {
+    padding: 0 4rem;
+  }
 }
 
 .text {
@@ -134,6 +152,9 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
+  @include media("desktop") {
+    height: 40vh;
+  }
 
   &::before {
     content: "";
@@ -154,12 +175,18 @@ img {
     text-transform: uppercase;
     letter-spacing: 2px;
     text-shadow: 0 2px 6px rgba(255, 255, 255, 0.3);
+    @include media("desktop") {
+      font-size: 5rem;
+    }
   }
 }
 
 // section ==============
 .section {
   padding: 3rem 0;
+  @include media("desktop") {
+    padding: 5rem 0;
+  }
 
   &__title {
     font-size: 3rem;
@@ -173,6 +200,10 @@ img {
 
 main .main-container {
   padding: 0;
+  @include media("desktop") {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 // form ============
@@ -189,7 +220,6 @@ main .main-container {
 
   &__input {
     padding: 1rem;
-    // background-color: lighten($cta, 50%);
     font-size: 1.4rem;
     width: 80%;
     border-top-left-radius: 3px;
@@ -207,6 +237,7 @@ main .main-container {
 
 // my-books list ========
 .my-books {
+  grid-column: 2 /-1;
   &__list {
     margin-top: 3rem;
   }
@@ -220,9 +251,7 @@ main .main-container {
   }
 
   & .read {
-    // background-color: rgba($grey, 0.3);
-    // opacity: 0.5;
-    // text-decoration: line-through;
+    opacity: 0.6;
   }
 
   &__heading {
@@ -256,7 +285,7 @@ main .main-container {
   }
   & .read &__btn {
     background-color: $secondary;
-    border-color: $black;
+    border-color: $secondary;
     color: $black;
     // text-decoration: none;
   }
@@ -282,7 +311,8 @@ main .main-container {
 // nytimes
 .nytimes {
   background-color: $white;
-
+  grid-column: 1 /2;
+  grid-row: 1 / -1;
   .section__title {
     text-align: center;
     position: relative;
@@ -312,6 +342,13 @@ main .main-container {
     grid-column-gap: 2.5rem;
     grid-row-gap: 0.5rem;
     grid-template-columns: min-content 1fr;
+    @include media("tablet-portrait") {
+      padding: 2.5rem 2.5rem 0;
+    }
+
+    @include media("tablet-landscape") {
+      padding: 2.5rem 3.5rem 0;
+    }
   }
 
   &__rank {
@@ -366,12 +403,13 @@ main .main-container {
 
   &__text {
     padding: 0 1.5rem;
+    @include media("tablet-landscape") {
+      padding: 0 3.5rem;
+    }
   }
 
   &__links {
     margin-top: 2rem;
-    // background-color: $grey;
-    // background-color: rgba($black, 0.7);
     display: flex;
     flex-wrap: wrap;
     padding: 2rem 1rem;
@@ -379,6 +417,9 @@ main .main-container {
     align-items: center;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
+    @include media("tablet-landscape") {
+      padding: 2rem 3rem;
+    }
   }
 
   &__links__heading {
@@ -389,6 +430,9 @@ main .main-container {
     margin-bottom: 1.5rem;
     border-bottom: 1px solid;
     padding: 0 0 1.5rem 1rem;
+    @include media("tablet-landscape") {
+      // padding: 0 3rem 1.5rem;
+    }
   }
 
   &__link {
@@ -406,6 +450,7 @@ main .main-container {
     &:active {
       font-weight: 400;
       background-color: $cta;
+      color: $white;
     }
   }
 }
