@@ -12,7 +12,6 @@ class Book {
     this.title = title;
     this.author = author;
     this.year = year;
-    this.read = false;
   }
 }
 class App {
@@ -23,7 +22,10 @@ class App {
     });
 
     form.addEventListener("submit", this._addBook.bind(this));
-    myBooksList.addEventListener("click", this._deleteFromMyBooks.bind(this));
+    myBooksList.addEventListener(
+      "click",
+      this._deleteAndReadFromMyBooks.bind(this)
+    );
   }
 
   async _addBook(e) {
@@ -73,11 +75,13 @@ class App {
     this._updateMyBooks();
   }
 
-  _deleteFromMyBooks(e) {
+  _deleteAndReadFromMyBooks(e) {
     const { id, index } = this._findIndexId(e);
     if (e.target.id === "delete") {
       myBooks.splice(index, 1);
       this._updateMyBooks();
+    } else if (e.target.id === "read") {
+      this._readUpdate(e, id);
     }
   }
 
@@ -85,6 +89,16 @@ class App {
     const id = el.target.closest("li").dataset.id;
     const index = myBooks.findIndex((oldbook) => oldbook.id === id);
     return { id, index };
+  }
+
+  _readUpdate(el, id) {
+    if (el.target.closest("li").classList.contains("read")) {
+      el.target.closest("li").classList.remove("read");
+      myBooksNumber.textContent = myBooks.length;
+    } else {
+      el.target.closest("li").classList.add("read");
+      myBooksNumber.textContent = myBooks.length - 1;
+    }
   }
 
   async _fetchBook(title) {
@@ -111,7 +125,7 @@ class App {
       <div class="my-books__heading">
         <h3 class="my-books__title">${book.title}</h3>
         <div class="my-books__btns">
-          <a href="#" class="my-books__btn">unread</a>
+          <a id="read"href="#" class="my-books__btn">unread</a>
           <a id="delete" href="#" class="my-books__delete">delete</a>
         </div>
       </div>
