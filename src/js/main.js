@@ -74,15 +74,18 @@ class App {
   }
 
   _deleteFromMyBooks(e) {
+    const { id, index } = this._findIndexId(e);
     if (e.target.id === "delete") {
-      const id = e.target.closest("li").dataset.id;
-      const index = myBooks.findIndex((oldbook) => oldbook.id === id);
       myBooks.splice(index, 1);
       this._updateMyBooks();
     }
   }
 
-  _findIndexId() {}
+  _findIndexId(el) {
+    const id = el.target.closest("li").dataset.id;
+    const index = myBooks.findIndex((oldbook) => oldbook.id === id);
+    return { id, index };
+  }
 
   async _fetchBook(title) {
     const res = await fetch(`http://openlibrary.org/search.json?q=${title}`);
