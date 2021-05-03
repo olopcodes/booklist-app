@@ -1,34 +1,123 @@
 import apiKey from "../../not-tracked/apikey.js";
 const form = document.querySelector(".form");
+const myBooks = [];
+const myBooksList = document.querySelector(".my-books__list");
 const formInput = document.querySelector(".form__input");
-const booksNumberText = document.querySelector(".my-books__number");
+const myBooksNumber = document.querySelector(".my-books__number");
 const bestSellerItems = document.querySelectorAll(".nytimes__item");
 
+class Book {
+  constructor(id, title, author, year) {
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.year = year;
+    this.read = false;
+  }
+}
 class App {
   constructor() {
+    // on load to render books already saved
+    window.addEventListener("load", (e) => {
+      console.log("hey");
+    });
+
     form.addEventListener("submit", this._addBook.bind(this));
+    myBooksList.addEventListener("click", this._deleteFromMyBooks.bind(this));
   }
 
-  _addBook(e) {
+  async _addBook(e) {
     e.preventDefault();
     const bookTitle = formInput.value;
     if (!bookTitle) return;
-    this._fetchBook(bookTitle);
+    await this._fetchBook(bookTitle).then((data) => {
+      const hasDuplicate = this._findDuplicates(data);
+      const testOne = hasDuplicate === undefined && myBooks.length === 0;
+      if (testOne || hasDuplicate === -1) {
+        this._addToMyBooks(data);
+      } else {
+        // create an alert
+        console.log("duplicate");
+      }
+      formInput.value = "";
+    });
   }
 
-  async _fetchBook(title) {
-    const res = await fetch(
-      `http://openlibrary.org/search.json?title=${title}`
+  _findDuplicates(book) {
+    if (myBooks.length > 0) {
+      return myBooks
+        .filter((oldbook) => oldbook.title === book.title)
+        .findIndex((oldBook) => oldBook.author === book.author);
+    }
+  }
+
+  _addToMyBooks(book) {
+    myBooks.push(book);
+  }
+
+  _updateMyBooks() {
+    myBooksNumber.textContent = myBooks.length;
+    myBooksList.innerHTML = "";
+    myBooks.forEach((book) => this._renderBook(book));
+  }
+
+  _addToMyBooks(newBook) {
+    this._renderBook(newBook);
+    const book = new Book(
+      newBook.id,
+      newBook.title,
+      newBook.author,
+      newBook.year
     );
+    myBooks.push(book);
+    this._updateMyBooks();
+  }
+
+  _deleteFromMyBooks(e) {
+    if (e.target.id === "delete") {
+      const id = e.target.closest("li").dataset.id;
+      const index = myBooks.findIndex((oldbook) => oldbook.id === id);
+      myBooks.splice(index, 1);
+      this._updateMyBooks();
+    }
+  }
+
+  _findIndexId() {}
+
+  async _fetchBook(title) {
+    const res = await fetch(`http://openlibrary.org/search.json?q=${title}`);
     const data = await res.json();
     if (data.numFound > 0) {
-      console.log(data);
+      return {
+        id: (Date.now() + "").slice(-10),
+        title: data.docs[0].title,
+        author: data.docs[0].author_name[0],
+        year: data.docs[0].first_publish_year,
+      };
     } else {
-      //
+      // create a popup
       alert(
         `The book title: ${title.toUpperCase()} has not been found. Enter a new book title`
       );
     }
+  }
+
+  _renderBook(book) {
+    myBooksList.innerHTML += `
+      <li class="my-books__item" data-id = ${book.id}>
+      <div class="my-books__heading">
+        <h3 class="my-books__title">${book.title}</h3>
+        <div class="my-books__btns">
+          <a href="#" class="my-books__btn">unread</a>
+          <a id="delete" href="#" class="my-books__delete">delete</a>
+        </div>
+      </div>
+      <div class="my-books__description">
+        <p class="my-books__text">${book.author}</p>
+        <p class="my-books__text">${book.year}</p>
+      </div>
+    </li>
+      `;
   }
 }
 
@@ -70,16 +159,19 @@ const getEbookBestSellers = async () => {
 // need to change the styling for read and unread
 
 /* <li class="my-books__item">
-<div class="my-books__heading">
-  <h3 class="my-books__title">another dope book tile</h3>
-  <a href="#" class="my-books__btn read">read</a>
-</div>
-<div class="my-books__description">
-  <p class="my-books__text">first lastname</p>
-  <p class="my-books__text">category</p>
-  <p class="my-books__text">1989</p>
-</div>
-</li> */
+      <div class="my-books__heading">
+        <h3 class="my-books__title">dope book tile</h3>
+        <div class="my-books__btns">
+          <a href="#" class="my-books__btn">unread</a>
+          <a href="#" class="my-books__delete">delete</a>
+        </div>
+      </div>
+      <div class="my-books__description">
+        <p class="my-books__text">first lastname</p>
+        <p class="my-books__text">category</p>
+        <p class="my-books__text">1999</p>
+      </div>
+    </li> */
 
 // ntytimes html template
 // changes styles from show to none
