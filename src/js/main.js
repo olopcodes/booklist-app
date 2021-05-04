@@ -1,6 +1,6 @@
 import apiKey from "../../not-tracked/apikey.js";
 const form = document.querySelector(".form");
-const myBooks = [];
+let myBooks = [];
 const myBooksList = document.querySelector(".my-books__list");
 const formInput = document.querySelector(".form__input");
 const myBooksNumber = document.querySelector(".my-books__number");
@@ -12,14 +12,13 @@ class Book {
     this.title = title;
     this.author = author;
     this.year = year;
+    this.read = false;
   }
 }
 class App {
   constructor() {
     // on load to render books already saved
-    window.addEventListener("load", (e) => {
-      console.log("hey");
-    });
+    window.addEventListener("load", this._loadSavedBooks.bind(this));
 
     form.addEventListener("submit", this._addBook.bind(this));
     myBooksList.addEventListener(
@@ -86,6 +85,25 @@ class App {
     }
   }
 
+  _loadSavedBooks() {
+    myBooks = this._getLocalStorage();
+    if (myBooks.length > 0) {
+      const readBooks = myBooks.find((b) => b.read === true);
+      // console.log(readBooks);
+      myBooks.forEach((book) => {
+        this._renderBook(book);
+        if (book.read) {
+          document
+            .querySelector(`[data-id = "${book.id}"]`)
+            .classList.add("read");
+          myBooksNumber.textContent = myBooks.length - 1;
+        } else {
+          myBooksNumber.textContent = myBooks.length;
+        }
+      });
+    }
+  }
+
   _deleteAndReadFromMyBooks(e) {
     e.preventDefault();
     const { id, index } = this._findIndexId(e);
@@ -103,14 +121,20 @@ class App {
     return { id, index };
   }
 
-  _readUpdate(el) {
+  _readUpdate(el, id) {
+    const book = myBooks.find((b) => b.id === id);
+
     if (el.target.closest("li").classList.contains("read")) {
       el.target.closest("li").classList.remove("read");
       myBooksNumber.textContent = myBooks.length;
+      book.read = false;
     } else {
       el.target.closest("li").classList.add("read");
       myBooksNumber.textContent = myBooks.length - 1;
+      book.read = true;
     }
+
+    this._setLocalStorage(myBooks);
   }
 
   async _fetchBook(title) {
