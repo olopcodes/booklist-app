@@ -1,7 +1,7 @@
-import apiKey from "../../not-tracked/apikey.js";
 const form = document.querySelector(".form");
 let myBooks = [];
 const myBooksList = document.querySelector(".my-books__list");
+const nyTimesList = document.querySelector(".nytimes__list");
 const formInput = document.querySelector(".form__input");
 const myBooksNumber = document.querySelector(".my-books__number");
 const bestSellerItems = document.querySelectorAll(".nytimes__item");
@@ -154,6 +154,15 @@ class App {
       );
     }
   }
+
+  async _fetchBestsellers() {
+    const res = await fetch(
+      `https://api.nytimes.com/svc/books/v3/lists/current/e-book-fiction.json?api-key=${apiKey}`
+    );
+    const data = await res.json();
+  }
+
+  _renderBestsellers() {}
 
   _renderBook(book) {
     myBooksList.innerHTML += `
