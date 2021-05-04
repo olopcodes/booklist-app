@@ -30,13 +30,14 @@ class App {
 
   async _addBook(e) {
     e.preventDefault();
+    if (!formInput.value) return;
     const bookTitle = formInput.value;
     if (!bookTitle) return;
     await this._fetchBook(bookTitle).then((data) => {
       const hasDuplicate = this._findDuplicates(data);
       const testOne = hasDuplicate === undefined && myBooks.length === 0;
       if (testOne || hasDuplicate === -1) {
-        this._addToMyBooks(data);
+        this._addToMyBooks(data, myBooks);
       } else {
         // create an alert
         console.log("duplicate");
@@ -53,17 +54,14 @@ class App {
     }
   }
 
-  _addToMyBooks(book) {
-    myBooks.push(book);
-  }
-
-  _updateMyBooks() {
+  _updateMyBooks(booksArr) {
     myBooksNumber.textContent = myBooks.length;
     myBooksList.innerHTML = "";
     myBooks.forEach((book) => this._renderBook(book));
+    this._setLocalStorage(booksArr);
   }
 
-  _addToMyBooks(newBook) {
+  _addToMyBooks(newBook, booksArr) {
     this._renderBook(newBook);
     const book = new Book(
       newBook.id,
@@ -72,10 +70,24 @@ class App {
       newBook.year
     );
     myBooks.push(book);
-    this._updateMyBooks();
+    this._updateMyBooks(booksArr);
+  }
+
+  _setLocalStorage(booksArr) {
+    localStorage.setItem("myBooks", JSON.stringify(booksArr));
+  }
+
+  _getLocalStorage() {
+    const myBooksJSON = localStorage.getItem("myBooks");
+    try {
+      return myBooksJSON ? JSON.parse(myBooksJSON) : [];
+    } catch (e) {
+      return [];
+    }
   }
 
   _deleteAndReadFromMyBooks(e) {
+    e.preventDefault();
     const { id, index } = this._findIndexId(e);
     if (e.target.id === "delete") {
       myBooks.splice(index, 1);
@@ -91,7 +103,7 @@ class App {
     return { id, index };
   }
 
-  _readUpdate(el, id) {
+  _readUpdate(el) {
     if (el.target.closest("li").classList.contains("read")) {
       el.target.closest("li").classList.remove("read");
       myBooksNumber.textContent = myBooks.length;
