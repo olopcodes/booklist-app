@@ -1,7 +1,8 @@
+// import bestseller from "./bestsellers.js";
+
 const form = document.querySelector(".form");
 let myBooks = [];
 const myBooksList = document.querySelector(".my-books__list");
-const nyTimesList = document.querySelector(".nytimes__list");
 const formInput = document.querySelector(".form__input");
 const myBooksNumber = document.querySelector(".my-books__number");
 const bestSellerItems = document.querySelectorAll(".nytimes__item");
