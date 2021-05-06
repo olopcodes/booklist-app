@@ -8,23 +8,26 @@ const nyTimesList = document.querySelector(".nytimes__list");
   const data = await res.json();
   data.results.books.forEach((b) => renderBestseller(b));
   const nyTimesItems = document.querySelectorAll(".nytimes__item");
-  nyTimesItems.forEach((i) => {
+  nyTimesItems.forEach((i, index) => {
     i.addEventListener("click", (e) => {
       if (
         e.target.classList.contains("nytimes__icon-icon") ||
         e.target.classList.contains("nytimes__icon")
       ) {
-        toggleDescription();
+        toggleDescription(index);
       }
     });
-    console.log(i);
   });
 })();
 
 // need the index inorder to move the others
-function toggleDescription() {
-  document.querySelector(".nytimes__description").classList.toggle("show");
-  document.querySelector(".nytimes__icon").classList.toggle("show");
+function toggleDescription(index) {
+  const descriptions = document.querySelectorAll(".nytimes__description");
+  descriptions[index].classList.toggle("show");
+  // console.log(descriptions);
+  // descriptions.forEach((d) => console.log(d.classList));
+  const icons = document.querySelectorAll(".nytimes__icon");
+  icons[index].classList.toggle("show");
 }
 
 // include the html template in here

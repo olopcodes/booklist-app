@@ -473,10 +473,12 @@ main .main-container {
     @include media("tablet-landscape") {
       padding: 0 3.5rem;
     }
+    @include media("tablet-landscape") {
+      padding: 0 2rem;
+    }
   }
 
   &__links {
-    margin-top: 2rem;
     display: flex;
     flex-wrap: wrap;
     padding: 2rem 1rem;
@@ -486,6 +488,10 @@ main .main-container {
     border-bottom-right-radius: 0.5rem;
     @include media("tablet-landscape") {
       padding: 2rem 3rem;
+    }
+
+    @include media("tablet-landscape") {
+      padding: 2rem 1rem;
     }
   }
 
