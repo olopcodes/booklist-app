@@ -7,20 +7,39 @@ const nyTimesList = document.querySelector(".nytimes__list");
   );
   const data = await res.json();
   data.results.books.forEach((b) => renderBestseller(b));
+  const nyTimesItems = document.querySelectorAll(".nytimes__item");
+  nyTimesItems.forEach((i) => {
+    i.addEventListener("click", (e) => {
+      if (
+        e.target.classList.contains("nytimes__icon-icon") ||
+        e.target.classList.contains("nytimes__icon")
+      ) {
+        toggleDescription();
+      }
+    });
+    console.log(i);
+  });
 })();
+
+// need the index inorder to move the others
+function toggleDescription() {
+  document.querySelector(".nytimes__description").classList.toggle("show");
+  document.querySelector(".nytimes__icon").classList.toggle("show");
+}
 
 // include the html template in here
 const renderBestseller = (book) => {
   nyTimesList.innerHTML += `
   <li class="nytimes__item">
   <div class="nytimes__heading">
+  <img src="${book.book_image}" alt="an image of ${book.title}" class="nytimes__img" />
+
     <span class="nytimes__rank">${book.rank}</span>
-    <img src="${book.book_image}" alt="an image of ${book.title}" class="nytimes__img" />
-    <div class="ntyimes__details">
+    <div class="nytimes__details">
     <h3 class="nytimes__title">${book.title}</h3>
     <h3 class="nytimes__author">${book.author}
       <span class="nytimes__icon">
-        <i class="fas fa-chevron-right"></i>
+        <i class="fas fa-chevron-right nytimes__icon-icon"></i>
       </span>
     </h3>
     </div>
