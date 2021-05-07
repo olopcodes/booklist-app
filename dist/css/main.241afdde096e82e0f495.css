@@ -1,2 +1,0 @@
-@import url(https://fonts.googleapis.com/css2?family=Inter:wght@100;400;700&family=Roboto:wght@100;400;700&display=swap);
-html{font-size:62.5%;height:100%;box-sizing:border-box}*,*::after,*::before{box-sizing:inherit;margin:0;padding:0}body{min-height:100%;font-family:"Roboto",sans-serif}h1,h2,h3,h4,h5,h6{font-family:"Inter",sans-serif}ul,li{list-style:none}a{text-decoration:none}img{max-width:100%}.header{background:url(images/book-img.jpg) no-repeat center center/cover;height:30vh}
