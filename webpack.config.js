@@ -10,7 +10,7 @@ const config = {
   entry: "./src/index.js",
   output: {
     filename: "myBundle.[hash].js",
-    path: path.resolve(__dirname, "docs"),
+    path: path.resolve(__dirname, "dist"),
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -42,7 +42,7 @@ const config = {
   devtool: "eval-cheap-source-map",
   devServer: {
     port: 8080,
-    contentBase: path.resolve(__dirname, "docs"),
+    contentBase: path.resolve(__dirname, "dist"),
     hot: true,
   },
 
