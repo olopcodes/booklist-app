@@ -12,12 +12,12 @@ $regular: "Roboto", sans-serif;
 @mixin media($size) {
   // <= 600
   @if $size == phone {
-    @media (max-width: 37em) {
+    @media (max-width: 35em) {
       @content;
     }
   } @else if $size == tablet-portrait {
     // 600 >
-    @media (min-width: 37.5em) {
+    @media (min-width: 35.1em) {
       @content;
     }
   } @else if $size == tablet-landscape {
@@ -133,6 +133,10 @@ img {
   font-size: 1.3rem;
   padding: 0.8rem 1.2rem;
   border-radius: 3px;
+  @include media("tablet-portrait") {
+    padding: 1.2rem 1.6rem;
+    // padding: 1rem 1.5rem;
+  }
 
   &-cta {
     background-color: lighten($cta, 5%);
@@ -215,18 +219,17 @@ main .main-container {
   align-items: center;
   justify-content: space-between;
 
-  &__heading {
-    // border: 1px solid;
-  }
-
   &__input {
-    padding: 1.4rem 1rem;
+    padding: 1rem;
     font-size: 1.4rem;
     width: 80%;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     border: 1.5px solid $cta;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    @include media("desktop") {
+      padding: 1.75rem;
+    }
   }
 
   .btn {

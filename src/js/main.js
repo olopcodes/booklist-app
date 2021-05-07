@@ -127,15 +127,27 @@ class App {
 
     if (el.target.closest("li").classList.contains("read")) {
       el.target.closest("li").classList.remove("read");
-      myBooksNumber.textContent = myBooks.length;
+      document.querySelector(".my-books__btn").textContent = "unread";
       book.read = false;
+      myBooksNumber.textContent = this._filterByRead().length;
     } else {
       el.target.closest("li").classList.add("read");
-      myBooksNumber.textContent = myBooks.length - 1;
+      document.querySelector(".my-books__btn").textContent = "read";
       book.read = true;
+      console.log(this._filterByRead().length);
+      myBooksNumber.textContent =
+        myBooks.length - this._filterByRead("yes").length;
     }
 
     this._setLocalStorage(myBooks);
+  }
+
+  _filterByRead(option) {
+    if (option === "yes") {
+      return myBooks.filter((b) => b.read === true);
+    } else {
+      return myBooks.filter((b) => b.read === false);
+    }
   }
 
   async _fetchBook(title) {
@@ -155,15 +167,6 @@ class App {
       );
     }
   }
-
-  async _fetchBestsellers() {
-    const res = await fetch(
-      `https://api.nytimes.com/svc/books/v3/lists/current/e-book-fiction.json?api-key=${apiKey}`
-    );
-    const data = await res.json();
-  }
-
-  _renderBestsellers() {}
 
   _renderBook(book) {
     myBooksList.innerHTML += `
